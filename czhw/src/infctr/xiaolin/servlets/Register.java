@@ -27,24 +27,28 @@ public class Register extends HttpServlet {
 		User u = (User) httpSession.getAttribute("user");
 		if (u != null ){
 			httpSession.removeAttribute("user");
-			resp.sendRedirect("/infocenter");
+			resp.sendRedirect("/czhw");
 			return ;
 		}
 		PrintWriter ps = resp.getWriter();
 		String nickName = req.getParameter("nickName");
 		String pwd = req.getParameter("pwd");
-		String age = req.getParameter("age");
-		String level = req.getParameter("level");
+		String birthday = req.getParameter("birthday");
 		String name = req.getParameter("name");
 		User user = new User();
 		user.setNickName(nickName);
 		user.setName(name);
 		user.setPwd(pwd);
-		user.setAge(Integer.parseInt(age));
-		user.setLevel(Integer.parseInt(level));
+		user.setBirthday(birthday);
 		SqlSession sqlsession = DatabaseConnectionUtility.getInstance().openSession();
-		 sqlsession.insert("queryForLogin", name);
-		
+		User dataBaseUserInfo = sqlsession.selectOne("queryUserInfo", user.getName());
+		if(dataBaseUserInfo == null){
+			ps.print("{success:false,error:{msg:'noUser'}}");
+		}else if("1".equals(dataBaseUserInfo.getHasRegisted())){
+			ps.print("{success:false,error:{msg:'hasRegisted'}}");
+		}
+		sqlsession.update("updateUserInfo", user);
+		sqlsession.commit();
 		if (user == null) {
 			ps.print("{success:true,msg:'noUser'}");
 		} else if (user.getPwd().equals(pwd)) {

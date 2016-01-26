@@ -82,10 +82,9 @@ var registerForm = new Ext.form.FormPanel({
 					forceSelection : true ,
 					xtype:"combo",
 					triggerAction:"all",
-					fieldLabel:"科室",
+					fieldLabel:"我的身份",
 					allowBlank:false,
-					//width : 120 ,
-					anchor:"80%",
+					anchor:"90%",
 					store :roomStore,
 					mode : 'local' ,
 					displayField:"ks",
@@ -116,34 +115,46 @@ var registerForm = new Ext.form.FormPanel({
 			        },
 			        scope : this 
 				},{
+					forceSelection : true ,
 					//hideLabel : true ,
 					xtype:"combo",
 					triggerAction:"all",
 					//fieldLabel:" ",
 					allowBlank:false,
-					anchor:"80%",
+					anchor:"90%",
 					store :nameStore,
 					mode : 'local' ,
 					displayField:"name",
 					valueField:"value",
 					msgTarget:"side",
+					name:'name' ,
 					emptyText:"名字"
 				},{
-						xtype:"textfield",
-						fieldLabel:"密码",
-						msgTarget:"side",
-						allowBlank:false,
-						anchor:"80%",
-						emptyText:"请输入密码"
-					}/*,{
-						xtype:"numberfield",
-						fieldLabel:"年龄",
-						allowBlank:false,
-						msgTarget:"side",
-						anchor:"80%",
-						emptyText:"请输入年龄"
-					}*/
-				]
+					xtype:"textfield",
+					vtype:'alphanum' ,
+					fieldLabel:"登录名",
+					allowBlank:false,
+					msgTarget:"side",
+					anchor:"90%",
+					name:'nickName' ,
+					emptyText:"请填写登录名"
+				},{
+					xtype:"datefield",
+					fieldLabel:"我的生日",
+					name:'birthday' ,
+					format:'Y-m-d' ,
+					msgTarget:"side",
+					allowBlank:false,
+					anchor:"90%"
+				},{
+					xtype:"textfield",
+					fieldLabel:"登陆密码",
+					name:'pwd' ,
+					msgTarget:"side",
+					inputType : 'password' ,
+					allowBlank:false,
+					anchor:"90%"
+				}]
 			});
 	/*Ext.getCmp('room').on('select', function(combo){
 		var r = combo.getValue();
@@ -152,7 +163,7 @@ var registerForm = new Ext.form.FormPanel({
 				Ext.regesterWin=Ext.extend(Ext.Window ,{
 	xtype:"window",
 	title:"请填写注册信息",
-	width:300,
+	width:280,
 	height:220,
 	layout:"fit",
 	//autoHeight:false,
@@ -169,7 +180,25 @@ var registerForm = new Ext.form.FormPanel({
 		this.buttons=[{
 					text : '注册' ,
 					handler : function(){
-						Ext.Msg.alert("注册成功");
+						var valid = registerForm.form.isValid();
+						if(valid != true)
+							return;
+						Ext.Msg.alert(valid);
+						registerForm.getForm().submit({
+								waitMsg : '提交注册信息,请稍后...',
+								url:'webRegist' ,
+								success : function(f,action){
+									if(action.result.msg=='noUser'){
+										Ext.Msg.alert('登录',"无此用户!");
+									}if(action.result.msg=='yes'){
+										form.getForm().getEl().dom.action = 'goodsManagement.jsp' ;
+										form.getForm().getEl().dom.submit();
+									}
+								},
+								failure:function(){
+									Ext.Msg.alert('失败',"登录失败!");
+								}
+							});
 					}
 				},{
 					text : '重置' ,

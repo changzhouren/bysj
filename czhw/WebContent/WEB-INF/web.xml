@@ -16,4 +16,12 @@
     <servlet-name>webLogin</servlet-name>
     <url-pattern>/webLogin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>webRegist</servlet-name>
+    <servlet-class>infctr.xiaolin.servlets.Register</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>webRegist</servlet-name>
+    <url-pattern>/webRegist</url-pattern>
+  </servlet-mapping>
 </web-app>

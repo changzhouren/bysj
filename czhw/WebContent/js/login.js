@@ -60,9 +60,9 @@ var window1 = new Ext.Window({
 						Ext.Msg.alert('失败',"登录失败!");
 					}
 				});
-				var items = this.ownerCt.items ;
-				var name = items.first().getValue();
-				var pwd = items.itemAt(1).getValue();
+				//var items = this.ownerCt.items ;
+				//var name = items.first().getValue();
+				//var pwd = items.itemAt(1).getValue();
 			}
 		} ,		{
 			text:'注册',
