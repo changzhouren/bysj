@@ -135,23 +135,14 @@ var registerForm = new Ext.form.FormPanel({
 						allowBlank:false,
 						anchor:"80%",
 						emptyText:"请输入密码"
-					},
-					{
-						xtype:"textfield",
-						fieldLabel:"真实姓名",
-						allowBlank:false,
-						msgTarget:"side",
-						anchor:"80%",
-						emptyText:"请输入真实姓名"
-					},
-					{
+					}/*,{
 						xtype:"numberfield",
 						fieldLabel:"年龄",
 						allowBlank:false,
 						msgTarget:"side",
 						anchor:"80%",
 						emptyText:"请输入年龄"
-					}
+					}*/
 				]
 			});
 	/*Ext.getCmp('room').on('select', function(combo){
